@@ -40,10 +40,17 @@ public:
         return m_wireframe;
     }
 
+    int segment() const 
+    { 
+        return segments; 
+    }
+
 // PRIVATE: stato dei widget, protetto dall'accesso diretto del main.
 private:
     // Colore RGBA dello sfondo, modificato dal widget ColorEdit3.
     glm::vec4 m_clearColor = glm::vec4(0.0f, 0.2f, 1.0f, 1.0f);
     // false = Fill; true = Wireframe.
     bool m_wireframe = false;
+
+    int segments = 3;
 };

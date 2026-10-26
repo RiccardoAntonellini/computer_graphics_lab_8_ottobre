@@ -111,6 +111,9 @@ int main()
 
     gui.initialize(window);
 
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendEquation(GL_FUNC_ADD);
 
     // ========================================================================
     // 7. TRIANGOLO
@@ -130,13 +133,15 @@ int main()
 
     MeshData circle = ShapeGenerator::createCircle(
         0.15,
-        10
+        3
     );
 
-    scene.add(
+    std::size_t circleIdx = scene.add(
         circle,
-        false
+        true
     );
+
+    int preSegments = 3;
 
     MeshData moon = ShapeGenerator::createMoon(
         20,
@@ -212,6 +217,20 @@ int main()
         );
 
         scene[heartIdx].updatePositions(updatedHeart.positions);
+
+        int segments = gui.segment();
+
+        if (segments != preSegments) {
+            MeshData updatedCircle = ShapeGenerator::createCircle(
+                0.15f,
+                segments
+            );
+
+            scene[circleIdx].setData(updatedCircle.positions, updatedCircle.colors, GL_TRIANGLE_FAN);
+            scene[circleIdx].upload(true);
+            preSegments = segments;
+        }
+        
 
         /* Inizia il frame dell interfaccia prima di costruire i widget. */
         gui.beginFrame();

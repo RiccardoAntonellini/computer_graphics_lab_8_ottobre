@@ -44,23 +44,15 @@ MeshData ShapeGenerator::createCircle(
 ) {
 
     MeshData data;
-    data.primitiveType = GL_POINTS;
+    data.primitiveType = GL_TRIANGLE_FAN;
 
     float x, y;
-    int nPoints;
 
-    if (precision <= 0) {
-        nPoints = 10;
-    }
-    else {
-        nPoints = precision;
-    }
+    data.positions.reserve(precision);
+    data.colors.reserve(precision);
 
-    data.positions.reserve(nPoints);
-    data.colors.reserve(nPoints);
-
-    float stepA = (2 * PI) / nPoints;
-    for (int i = 0; i < nPoints; ++i)
+    float stepA = (2 * PI) / precision;
+    for (int i = 0; i < precision; ++i)
     {
         double t = (double)i * stepA;
         x = cos(t) * raggioX;
@@ -68,7 +60,7 @@ MeshData ShapeGenerator::createCircle(
 
         glm::vec3 pos = glm::vec3(x, y, 0.0f);
         data.positions.push_back(pos);
-        data.colors.push_back(glm::vec4(0.55f, 0.12f, 0.83f, 1.0f));
+        data.colors.push_back(glm::vec4(0.55f, 0.12f, 0.83f, 0.1f));
     }
 
     return data;
@@ -154,7 +146,7 @@ MeshData ShapeGenerator::createHeart(
 
         glm::vec3 pos = glm::vec3(x, y, 0.0f);
         data.positions.push_back(pos);
-        data.colors.push_back(glm::vec4(0.0f, 0.7f, 0.3f, 1.0f));
+        data.colors.push_back(glm::vec4(0.0f, 0.7f, 0.3f, 0.3f));
     }
 
     return data;

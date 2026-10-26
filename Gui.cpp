@@ -38,7 +38,8 @@ void Gui::draw()
     ImGui::Text("Colore dello sfondo");
     ImGui::ColorEdit3(
         "Background",
-        &m_clearColor.r
+        &m_clearColor.r,
+        ImGuiColorEditFlags_Uint8
     );
 
     ImGui::Separator();
@@ -48,6 +49,14 @@ void Gui::draw()
         "Wireframe",
         &m_wireframe
     );
+
+    if (ImGui::Button("Reset")) {
+        m_clearColor = glm::vec4(0.0f, 0.2f, 1.0f, 1.0f);
+        m_wireframe = false;
+    };
+
+    ImGui::SliderInt("Segmenti", &segments, 3, 60);
+ 
 
     ImGui::End();
 }
